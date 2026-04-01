@@ -1,0 +1,137 @@
+
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+      overflow: hidden;
+    }
+
+    .chessboard {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-rows: repeat(8, minmax(0, 1fr));
+      width: 420px;
+      height: 420px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .square {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .square.light {
+      background: linear-gradient(145deg, #f0d9b5, #e6cfa3);
+    }
+
+    .square.dark {
+      background: linear-gradient(145deg, #b58863, #8b5a2b);
+    }
+
+    .square:hover {
+      transform: scale(1.05);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .piece {
+      font-size: 38px;
+      cursor: grab;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .piece:active {
+      cursor: grabbing;
+      transform: scale(1.2);
+    }
+
+    .piece.white {
+      color: #ffffff;
+      filter: drop-shadow(0 0 5px black);
+    }
+
+    .piece.black {
+      color: #111;
+      filter: drop-shadow(0 0 3px white);
+    }
+
+    .flipped {
+      transform: rotate(180deg);
+    }
+
+    .flipped .piece {
+      transform: rotate(180deg);
+    }
+
+    /* Glow animation */
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px #22c55e; }
+      50% { box-shadow: 0 0 20px #22c55e; }
+      100% { box-shadow: 0 0 5px #22c55e; }
+    }
+
+    /* Fade animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .status-box {
+      animation: glow 2s infinite;
+    }
+    .fnt{
+      font-family:Georgia, 'Times New Roman', Times, serif
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="w-full h-screen flex flex-col items-center justify-center text-white">
+
+    <!-- Title -->
+    <h1 class="text-4xl font-bold mb-3 tracking-wide fnt">
+      ♟️ Chess Arena
+    </h1>
+
+    <!-- Player Role -->
+    <p id="role" class="mb-6 px-4 py-2 bg-green-500 text-black rounded-lg status-box">
+      Connecting...
+    </p>
+
+    <!-- Board -->
+    <div id="board" class="chessboard"></div>
+
+  </div>
+
+  <!-- Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Chess.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+
+  <!-- Your Script -->
+  <script src="/js/chessGame.js"></script>
+
+</body>
+
+</html>
